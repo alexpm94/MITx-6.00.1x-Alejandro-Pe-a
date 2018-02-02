@@ -5,11 +5,11 @@ Created on Mon Jan 22 13:07:47 2018
 
 @author: alexpm94
 """
-d1 = {1:30, 2:20, 3:30}
-d2 = {1:40, 2:50, 3:60}
+d1 = {1:30, 2:20, 3:30, 5:80}
+d2 = {1:40, 2:50, 3:60, 4:70, 6:90}
 
-def f1(a,b):
-    return a>b
+def f(a,b):
+    return a+b
 
 def dict_interdiff(d1, d2):
     '''
@@ -19,19 +19,16 @@ def dict_interdiff(d1, d2):
     # Your code here
     nd1={}
     nd2={}
-    ks=sorted(sorted(d1)+sorted(d2))+[-1]#keys sorted
-    count=1
-    for i in range(len(ks)-1):
-        if ks[i]==ks[i+1]:
-            nd1[ks[i]]=f1(d1[ks[i]],d2[ks[i]])
-            count+=1
+    for i in d1:
+        if i in d2:
+            nd1[i]=f(d1[i],d2[i])
         else:
-            if count<2:
-                if d1.get(ks[i],0)!=0:                
-                    nd2[ks[i]]=d1[ks[i]]
-                else:
-                    nd2[ks[i]]=d2[ks[i]]
-            count=1
+            nd2[i]=d1[i]
+            
+    for i in d2:
+        if not i in d1:
+            nd2[i]=d2[i]
+    
     return (nd1,nd2)
     
-print(type(dict_interdiff(d1,d2)))
+print(dict_interdiff(d1, d2))
